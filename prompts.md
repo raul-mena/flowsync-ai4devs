@@ -22,14 +22,41 @@ Borra el ejemplo de abajo cuando escribas el primero.
 
 ## Prompt 1
 
-**Modelo:** Opus 1M xHigh
+**Modelo:** Opus 5
 **Herramienta:** Claude Code
 
 ```
-Este es el ejemplo. Bórralo.
-
-El prompt va aquí dentro, entero y con sus saltos de línea,
-para que se sepa dónde empieza y dónde acaba.
+Migra este proyecto de SQLite a PostgreSQL en Docker. Restricciones no negociables:
+- compose.yaml con servicios db y db-test, imagen pgvector/pgvector:pg17, sin clave version:
+- Puertos 54410 (dev) y 54411 (test)
+- db-test sin persistencia: usa tmpfs en /var/lib/postgresql/data
+- Healthcheck en ambos con pg_isready por TCP (-h 127.0.0.1); el arranque espera a healthy
+- .env.test apuntando a db-test, cargado solo en entorno de pruebas
+- Makefile: db-up, db-down, migrate (ambas bases), test
+- NO modifiques ninguna migración existente. Si alguna falla en Postgres, detente y dime cuál y por qué.
+Primero muéstrame el plan sin aplicar cambios.
 ```
 
-**Qué salió:** (opcional, una línea) funcionó a la primera / tuve que insistir / me inventó una ruta que no existe.
+**Qué salió:** (opcional, una línea) me mostro el analisis del lo existente y el plan para hacer la migracion
+
+## Prompt 2
+
+**Modelo:** Opus 5
+**Herramienta:** Claude Code
+
+```
+procede con el plan de migracion
+```
+
+**Qué salió:** (opcional, una línea) modifico .env, creo el contenedor en docker, instalo dependencias necesarias y actulizo la conexion
+
+## Prompt 3
+
+**Modelo:** Opus 5
+**Herramienta:** Claude Code
+
+```
+procede con el plan de migracion
+```
+
+**Qué salió:** (opcional, una línea) modifico .env, creo el contenedor en docker, instalo dependencias necesarias y actulizo la conexion

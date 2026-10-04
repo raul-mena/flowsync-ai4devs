@@ -8,19 +8,23 @@ Escribe **una sola línea por punto**, con tus palabras y con lo que mediste, no
 
 ## 1. Las filas que cambian y la rama
 
-Cuántas filas cambian de valor en tu cambio de esquema, medido con una consulta, y en qué rama del
-árbol de reversibilidad cae. Si tu migración no toca datos, dilo tal cual: también es una respuesta.
+mac@macbooks-MacBook-Pro flowsync-ai4devs % docker compose exec db psql -U flowsync -d flowsync -c "SELECT count(*) FROM tasks;"
+ count 
+-------
+     0
+(1 row)
+
+0 filas cambian de valor (medido: `SELECT count(*) FROM tasks` en Postgres = N tras migrar, el cambio de motor no copia ni convierte datos, la base arranca vacia
 
 -
 
 ## 2. Lo que la batería de pruebas no podía ver
 
-Una cosa que la batería de pruebas no podía ver. Si no encontraste ninguna, escribe qué buscaste y dónde.
-
+Postgres devuelve las columnas date como objeto Date y Task.isOverdueOn compara texto ISO: sin el pg.types.setTypeParser(1082, ...) que agrego el agente en config/database.ts, ninguna tarea sale vencida y las 23 pruebas originales siguen en verde, solo lo detecta el overdue.spec.ts que añadió el agente
 -
 
 ## 3. Tu duda
 
-De qué dudaste, o qué no pudiste comprobar.
+git diff s10/start -- backend/database/schema.ts sale vacío aunque la tarea dice que ese fichero cambia
 
 -
